@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Enrollement Form</title>
+    <style>
+        header {
+            text-align: center;
+            background-color: aquamarine;
+            font-size: 200%;
+            color: white;
+            font-weight: 1000;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            padding: 1%;
+            max-width: 90%;
+            margin: auto;
+        }
+
+        .row {
+            display: flex;
+            max-width: 90%;
+            margin: auto;
+        }
+
+        .column {
+            flex: 50%;
+            margin-top: 2%;
+        }
+
+        input,
+        textarea {
+            margin-bottom: 3%;
+        }
+
+        input[type=text],
+        input[type=email],
+        input[type=url] {
+            padding: 1%;
+            border-radius: 6px;
+            border-color: lightgray;
+        }
+
+        fieldset {
+            border: none;
+            background-repeat: no-repeat;
+            max-width: fit-content;
+            padding: 0%;
+        }
+
+        .enrollButton {
+            background-color: rgb(47, 47, 230);
+            border-radius: 6px;
+            color: white;
+            font-size: 100%;
+            border: 0px;
+            padding: 10px 20px;
+            margin-top: 1%;
+        }
+
+        .clearButton {
+            background-color: rgb(230, 44, 44);
+            border-radius: 6px;
+            color: white;
+            font-size: 100%;
+            border: 0px;
+            padding: 10px 20px;
+            margin-top: 1%;
+            margin-left: 1%;
+        }
+
+        label {
+            float: left;
+            width: 20%;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .myForm {
+            border-right: 2px solid aquamarine;
+        }
+
+        table,
+        tr,
+        td,
+        th {
+            border: 2px solid rgb(161, 169, 19);
+            border-collapse: collapse;
+            margin: auto;
+        }
+
+        th {
+            background-color: rgb(217, 228, 23);
+        }
+
+        td img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        Student Enrollement Form
+    </header>
+    <div class="row">
+        <div class="column">
+            <div class="myForm">
+                <form action="" method="post" id="myEnrollmentForm">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required><br>
+                    <label for="mail">Email</label>
+                    <input type="email" id="mail" required><br>
+                    <label for="web">Website</label>
+                    <input type="url" id="web" required><br>
+                    <label for="imageLink">Image Link</label>
+                    <input type="url" id="imageLink" required><br>
+                    <label for="gender">Gender</label>
+                    <fieldset>
+                        <input type="radio" name="gender" class="radio" value="Male" required>
+                        Male<br>
+                        <input type="radio" name="gender" class="radio" value="Female">
+                        Female
+                    </fieldset><br>
+                    <label for="skills">Skills</label>
+                    <input type="checkbox" name="skills" id="skills1" value="Java" required>
+                    Java&nbsp;&nbsp;&nbsp;<input type="checkbox" name="skills" value="HTML" id="skills2">
+                    HTML&nbsp;&nbsp;&nbsp;<input type="checkbox" name="skills" id="skills3" value="CSS"> CSS<br>
+                    <input type="submit" class="enrollButton" value="Enroll Student">
+                    <input type="reset" class="clearButton" value="Clear">
+                </form>
+            </div>
+        </div>
+        <div class="column">
+            <div class="eList">
+                <h2>Enrolled Students</h2>
+                <table id="enrolledStudentsTable">
+                    <tr>
+                        <th width="200px">Description</th>
+                        <th width="100px">Image</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        var myForm = document.getElementById("myEnrollmentForm")
+        myForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            var name = document.getElementById("name").value
+            var mail = document.getElementById("mail").value
+            var web = document.getElementById("web").value
+            var imgUrl = document.getElementById("imageLink").value
+            var gender = document.querySelector('input[name="gender"]:checked').value
+            var skills = []
+            for (var i = 0; i < 3; i++) {
+                var checkbox = document.querySelector(`#skills${i+1}`)
+                if (checkbox.checked === true) {
+                    skills.push(checkbox.value)
+                }
+            }
+            console.log(name, mail, web, imgUrl, gender, skills)
+            var table = document.getElementById('enrolledStudentsTable')
+            var row = table.insertRow(1)
+            var cell1 = row.insertCell(0)
+            var cell2 = row.insertCell(1)
+            cell1.innerHTML = `${name}<br>${gender}<br>${mail}<br><a href="${web}" target="_blank">${web}</a><br>${skills.join(',')}`
+            cell2.innerHTML = `<img src="${imgUrl}" alt = "${name} Profile Picture" height="100" width="100">`
+            myForm.reset()
+        })
+    </script>
+</body>
+
+</html>
